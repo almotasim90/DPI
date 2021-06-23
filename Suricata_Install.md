@@ -91,7 +91,7 @@ You could test also with this command:
 a simple configuration for Suricata is to specify the network interface in `/etc/suricata/suricata.yaml` :
 	
 	af-packet:
-  - interface: enp1s0
+    interface: enp1s0
 
 it depends on what is your network interface that you want Suricata to monitor, it could be  `eth0`, you could check what netowk platform the device have using  ` ifconfig `.
 
