@@ -1,8 +1,19 @@
 ---
 title:  Install & Configure Suricata
 description: Install and Maintain Suricata on Debian
-category: DPI installation
+category: DPI 
 ---
+
+This page is for setting up and configure Suricata network threat detection (version 6.0.1) engine on Debian 10.
+
+## Requirements
+
+* Clean Debian 10 installation with all updates installed;
+* Have a **STATIC** IPv4 and IPv6 address configured on your external 
+  interface;
+* Network equipment/VM platform allows access to the very least `tcp/80`, 
+  `tcp/443`, for basic functionality, and fetching and installing dependency packages.
+
 
 
 ## Suricata Installation On Debian 10
