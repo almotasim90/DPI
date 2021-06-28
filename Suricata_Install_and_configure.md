@@ -57,6 +57,17 @@ Install Suricata from source file:
 	$ ./configure --libdir=/usr/lib64 --prefix=/usr/local --sysconfdir=/etc --localstatedir=/var --datarootdir=/usr/local/share --enable-lua --enable-rust
 	$ sudo make install-full
 
+You can now start suricata by running as root something like:
+
+	$ /usr/local/bin/suricata -c /etc/suricata/suricata.yaml -i eth0
+
+If a library like libhtp.so is not found, you can run suricata with:
+ 
+	$ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/suricata -c /etc/suricata/suricata.yaml -i eth0
+
+	
+
+
 Then create the suricata service manually:
 
 	nano /etc/systemd/system/suricata.service
