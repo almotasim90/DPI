@@ -133,7 +133,16 @@ Or it could be in an executable file, lets name it `test.sh`:
 
 	$ */5 * * * * /path/to/test.sh
 
-The same for the inseration commands. 
+The same for the inseration commands. the shell file `test.sh` should be like this:
+
+	#!/bin/bash
+
+	sqlite3 /var/lib/vpn-server-api/db.sqlite " ATTACH DATABASE '/var/lib/evebox/events.sqlite' AS events; 
+	INSERT INTO user_messages (type, message, date_time,user_id) select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where main.connection_log.ip4 = json_extract(source, '$.dest_ip') AND json_extract(source, '$.alert') LIKE '% %' AND  json_extract(events.source, '$.timestamp') BETWEEN connected_at and disconnected_at AND user_id NOT IN (select user_id from user_messages where message = json_extract(source, '$.alert.signature') AND date_time =json_extract(source, '$.timestamp'));"
+
+Now the inseration will be done every 5 mins. 
+
+
 
 
 
