@@ -18,7 +18,7 @@ This page is for setting up and configure Suricata network threat detection (ver
 
 ## Suricata Installation On Debian 10
 
-Suricata is a free to use and open source network threat detection engine. Before installing Suricata, lets begin woth updating the system and upgrading all packages,then reboot:
+Suricata is a free to use and open source network threat detection engine. Before installing Suricata, lets begin with updating the system and upgrading all packages,then reboot:
 
 	$ sudo apt update
 	$ sudo apt upgrade -y
@@ -57,18 +57,18 @@ Install Suricata from source file:
 	$ ./configure --libdir=/usr/lib64 --prefix=/usr/local --sysconfdir=/etc --localstatedir=/var --datarootdir=/usr/local/share --enable-lua --enable-rust
 	$ sudo make install-full
 
-You can now start suricata by running as root something like:
+You can now start Suricata by running as root something like:
 
 	$ /usr/local/bin/suricata -c /etc/suricata/suricata.yaml -i eth0
 
-If a library like libhtp.so is not found, you can run suricata with:
+If a library like libhtp.so is not found, you can run Suricata with:
  
 	$ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/suricata -c /etc/suricata/suricata.yaml -i eth0
 
 	
 
 
-Then create the suricata service manually:
+Then create the Suricata service manually:
 
 	nano /etc/systemd/system/suricata.service
 
@@ -93,7 +93,7 @@ Then create the suricata service manually:
 	WantedBy=multi-user.target
 
 
-Then start Surricata and check the status:
+Then start Suricata and check the status:
 
 	$ systemctl start suricata 
 
@@ -115,7 +115,7 @@ a simple configuration for Suricata is to specify the network interface in `/etc
 	af-packet:
     interface: enp1s0
 
-it depends on what is your network interface that you want Suricata to monitor, it could be  `eth0`, you could check what netowk platform the device have using  ` ifconfig `.
+it depends on what is your network interface that you want Suricata to monitor, it could be  `eth0`, you could check what network platform the device have using  ` ifconfig `.
 
 Also, specify the network range you want to monitor in `/etc/suricata/suricata.yaml` in `address-groups`:	
 
@@ -135,17 +135,17 @@ Suricata rules can be found in  `/var/lib/suricata/rules/suricata.rules`, by def
 
 It is recommended to update your rules frequently.
 
-You could use see other rulesets available: by fetching the master index from the OISF hosts,then list avaliable rulesets:
+You could use see other rule-sets available: by fetching the master index from the OISF hosts,then list avaliable rulesets:
 
 	$ sudo suricata-update update-sources
 	$ sudo suricata-update list-sources
 
-It will give a list of rulests as a result. Each of the rulesets has a name that has a ‘vendor’ prefix, followed by a set name. For example, secure workers security-malware ruleset is called ‘scwx/malware’. To enable ‘scwx/malware’, enter:
+It will give a list of rule-sets as a result. Each of the rule-sets has a name that has a ‘vendor’ prefix, followed by a set name. For example, secure workers security-malware rule-set is called ‘scwx/malware’. To enable ‘scwx/malware’, enter:
 
 	$ sudo suricata-update enable-source
 	$ sudo suricata-update
 
-Then retsart Suricata service and the ruleset is loaded. 
+Then restart Suricata service and the rule-set is loaded. 
 
 #### Controlling Suricata rules
 
@@ -155,13 +155,13 @@ By default all Suricata rules are merged into a single file `/var/lib/suricata/r
 		group:emerging-icmp.rules # enable this rulefile
 		re:trojan                 # enable all rules with this string
 
-It is similar to disabe any rule, use  `/etc/suricata/disable.conf` :
+It is similar to disable any rule, use  `/etc/suricata/disable.conf` :
 
 		2019401                   # disable signature with this sid
 		group:emerging-info.rules # disable this rulefile
 		re:heartbleed             # disable all rules with this string
 
-Also, the same for `drop.conf` and `modify.conf` files. after configuring or modifing the rules, update with command:
+Also, the same for `drop.conf` and `modify.conf` files. after configuring or modifying the rules, update with command:
 
 	$ sudo suricata-update
 
