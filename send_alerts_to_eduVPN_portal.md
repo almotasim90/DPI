@@ -106,7 +106,7 @@ This will insert the alerts for each user without any conflict!
 
 **HOWEVER** This kind of inseration will be automated. That means it will be inserted more than once upon the time. So, you have to make sure that inserted data are not getting duplicated. With taking this into considration, another filter added to make sure that the alerts inserted is not dublicated. You are going to use `NOT_IN`  operator or similar. The end statement result will be this query:
 
-	$ INSERT INTO user_messages (type, message, date_time,user_id) select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where main.connection_log.ip4 = json_extract(source, '$.dest_ip') AND json_extract(source, '$.alert') LIKE '% %' AND  json_extract(events.source, '$.timestamp') BETWEEN connected_at and disconnected_at AND user_id NOT IN (select user_id from user_messages where message = json_extract(source, '$.alert.signature') AND date_time =json_extract(source, '$.timestamp')); 
+	$ INSERT INTO user_messages (type, message, date_time,user_id) select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where (main.connection_log.ip4 = json_extract(source, '$.dest_ip') OR main.connection_log.ip4 = json_extract(source, '$.src_ip')) AND json_extract(source, '$.alert') LIKE '% %' AND  json_extract(events.source, '$.timestamp') BETWEEN connected_at and disconnected_at AND user_id NOT IN (select user_id from user_messages where message = json_extract(source, '$.alert.signature') AND date_time =json_extract(source, '$.timestamp'));
 
 That is the final query to insert the alerts into  `user_messages` table safely. 
 
@@ -138,9 +138,9 @@ The same for the inseration commands. the shell file `test.sh` should be like th
 	#!/bin/bash
 
 	sqlite3 /var/lib/vpn-server-api/db.sqlite " ATTACH DATABASE '/var/lib/evebox/events.sqlite' AS events; 
-	INSERT INTO user_messages (type, message, date_time,user_id) select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where main.connection_log.ip4 = json_extract(source, '$.dest_ip') AND json_extract(source, '$.alert') LIKE '% %' AND  json_extract(events.source, '$.timestamp') BETWEEN connected_at and disconnected_at AND user_id NOT IN (select user_id from user_messages where message = json_extract(source, '$.alert.signature') AND date_time =json_extract(source, '$.timestamp'));"
+	INSERT INTO user_messages (type, message, date_time,user_id) select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where (main.connection_log.ip4 = json_extract(source, '$.dest_ip') OR main.connection_log.ip4 = json_extract(source, '$.src_ip')) AND json_extract(source, '$.alert') LIKE '% %' AND  json_extract(events.source, '$.timestamp') BETWEEN connected_at and disconnected_at AND user_id NOT IN (select user_id from user_messages where message = json_extract(source, '$.alert.signature') AND date_time =json_extract(source, '$.timestamp'));"
 
-Now the inseration will be done every 5 mins. 
+Now the inseration will be done every 5 mins.
 
 
 
