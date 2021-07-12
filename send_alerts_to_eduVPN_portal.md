@@ -1,10 +1,10 @@
 ---
-title: EveBox alerts in eduVPN portal. 
-description: Ship EveBox alerts eduVPN portal.
-category: DPI
+Title: EveBox alerts in eduVPN portal. 
+Description: Ship EveBox alerts eduVPN portal.
+Category: DPI
 ---
 
-This page is for sending EveBox alerts from Events SQLite database into EduVPN SQLite databse. EveBox alerts are coming from `eve.json` file, which have all Suricata logs stored in. 
+This page is for sending EveBox alerts from Events SQLite database into EduVPN SQLite database. EveBox alerts are coming from `eve.json` file, which have all Suricata logs stored in. 
 
 ## Requirements
 
@@ -41,7 +41,7 @@ Since we are trying to connect between two different databases, When you connect
 
 Therefore, every SQLite database connection has the `main` database and also `temp` database in case you deal with temporary database objects.
 
-In order to attach an additional database to the current database connection, you can use this following statement inside the current SQLite databse:
+In order to attach an additional database to the current database connection, you can use this following statement inside the current SQLite database:
 
 	$ ATTACH DATABASE file_name AS database_name;
 
@@ -54,12 +54,12 @@ Now,if you run `.databases` you can see something like this:
 	main: /var/lib/vpn-server-api/db.sqlite
 	Events: /var/lib/evebox/events.sqlite
 
-That will validate the datbase is attached!
+That will validate the database is attached!
 
 
 ## Query to get data from EveBox database for User Messages table
 
-The EveBox database is storing the actual alert or event as a JSON data, Therefore, an additional option is used in the statments to get those data. we are going to use `json_extract` option. 
+The EveBox database is storing the actual alert or event as a JSON data, Therefore, an additional option is used in the statement to get those data. we are going to use `json_extract` option. 
 
 **NOTE** You van read more about `json_extract` at this [page](https://samadhiweb.com/blog/2016.04.24.sqlite.json.html).
 
@@ -77,7 +77,7 @@ The query that used to get the needed data from EveBox database is:
 
 	$ select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), user_id from main.connection_log join events.events where (main.connection_log.ip4 = json_extract(source, '$.dest_ip') OR main.connection_log.ip4 = json_extract(source, '$.src_ip'));
 
-`event_type` will be stored as `type`, `alert.signature` which is the suricata alert message,will be stored as `message`, and finally the `timestamp` will be stored as the `date_time` 
+`event_type` will be stored as `type`, `alert.signature` which is the Suricata alert message,will be stored as `message`, and finally the `timestamp` will be stored as the `date_time` 
 
 
 **NOTE** It is important that each user gets his own alerts, with out any conflict with other users. That is why we need `user_id` from `connection_log` table, so that later we could insert the right data in the right place.
@@ -89,6 +89,14 @@ However, an IP address can be used by different users. So an additional filter i
 
 By matching the `timesatmp` with `connected_at` and `disconnected_at` time, we will make sure that alerts generated that time belongs to that user. So with this query yo can get all the needed data to be inserted into `user_messages` table.
 
+
+### Extract other values
+
+You can extract any value from the `eve.json` file. For example `severity` alert number might be useful. So, by looking into the event from `eve.json` or EveBox SQLite database, You can see that `severity` value is placed inside an alert array, in order to extract the value we could use the following query for example: \
+
+	$  select json_extract(source, '$.event_type'), json_extract(source, '$.alert.signature'), json_extract(source, '$.timestamp'), json_extract(source, '$.alert.severity') from events where json_extract(source, '$.alert') LIKE '% %';
+
+This command will show the all the alert along with severity number, that can be used later to indicate the priority of the alert. 
 
 
 ## Insert Alerts into USER_MESSAGES table
@@ -145,13 +153,4 @@ Now the insertion will be done every 5 mins.
 
 
 
-
-
-
-
-
-
-
-
-	
 

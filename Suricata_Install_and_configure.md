@@ -1,7 +1,7 @@
 ---
-title:  Install & Configure Suricata
-description: Install and Maintain Suricata on Debian
-category: DPI 
+Title:  Install & Configure Suricata
+Description: Install and Maintain Suricata on Debian
+Category: DPI 
 ---
 
 This page is for setting up and configure Suricata network threat detection (version 6.0.1) engine on Debian 10.
@@ -18,13 +18,38 @@ This page is for setting up and configure Suricata network threat detection (ver
 
 ## Suricata Installation On Debian 10
 
-Suricata is a free to use and open source network threat detection engine. Before installing Suricata, lets begin with updating the system and upgrading all packages,then reboot:
+Suricata is a free to use and open source network threat detection engine. In this documentation there are two ways of installing Suricata, From source or from binary package. For people familiar with compiling their own software, the Source method is recommended.
+
+### Install Suricata from Binary package 
+
+With a simple install command you can install Suricata from binary package in Debian 10:
+
+	$ sudo apt-get install suricata
+
+
+In the “stable” version of Debian, Suricata is usually not available in the latest version. A more recent version is often
+available from Debian back-ports, if it can be built there.
+
+To use back-ports, the back-ports repository for the current stable distribution needs to be added to the system-wide
+sources list. For Debian 10 (buster), for instance, run the following as root:
+
+	$ echo "deb http://http.debian.net/debian buster-backports main" > \
+	/etc/apt/sources.list.d/backports.list
+	$ apt-get update
+	$ apt-get install suricata -t buster-backports
+
+
+More information about installing Suricata in other distributions and various configurations can be found in this [PDF guide.](https://buildmedia.readthedocs.org/media/pdf/suricata/latest/suricata.pdf).
+
+### Install Suricata from source
+
+Before installing Suricata from source, lets begin with updating the system and upgrading all packages,then reboot:
 
 	$ sudo apt update
 	$ sudo apt upgrade -y
 	$ reboot 
 
-We’ll install Suricata on Debian 10 from the source distribution files, it gives more controll on Suricata installation, Before installing Suricata, a number of dependency packages and pre-requisite files needed to be installed, they can be installed using the following commands:
+We’ll install Suricata on Debian 10 from the source distribution files, it gives more control on Suricata installation, Before installing Suricata, a number of dependency packages and pre-requisite files needed to be installed, they can be installed using the following commands:
 
 	$ apt-get install make autoconf automake libtool
 
@@ -38,7 +63,7 @@ We’ll install Suricata on Debian 10 from the source distribution files, it giv
 
  	$pip3 install PyYAML
 
-Remove any existing rustc packag if any, and install the latest rustc package using this commands:
+Remove any existing rustc package if any, and install the latest rustc package using this commands:
 
 	$ sudo apt remove --purge rustc
 	$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
