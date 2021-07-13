@@ -167,10 +167,16 @@ You could use see other rule-sets available: by fetching the master index from t
 
 It will give a list of rule-sets as a result. Each of the rule-sets has a name that has a ‘vendor’ prefix, followed by a set name. For example, secure workers security-malware rule-set is called ‘scwx/malware’. To enable ‘scwx/malware’, enter:
 
-	$ sudo suricata-update enable-source
+	$ sudo suricata-update enable-source scwx/malware
 	$ sudo suricata-update
 
 Then restart Suricata service and the rule-set is loaded. 
+
+You also can run testing with:
+	
+	$ sudo suricata -T
+
+You should receive a notice "Configuration provided was successfully loaded. Exiting."
 
 #### Controlling Suricata rules
 
