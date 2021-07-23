@@ -41,6 +41,11 @@ sources list. For Debian 10 (buster), for instance, run the following as root:
 
 More information about installing Suricata in other distributions and various configurations can be found in this [PDF guide.](https://buildmedia.readthedocs.org/media/pdf/suricata/latest/suricata.pdf).
 
+
+
+
+
+
 ### Install Suricata from source
 
 Before installing Suricata from source, lets begin with updating the system and upgrading all packages,then reboot:

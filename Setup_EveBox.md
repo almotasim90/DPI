@@ -17,7 +17,7 @@ This page is for setting up and configure EveBox. EveBox is a web-app alert and 
 
 ## EveBox Installation On Debian 10
 
-By visiting the EveBox official website [EveBox](https://evebox.org/), Then going to `Download`, There are several ways to install EveBox, I will use `.deb` file as it is easy to install in DEbian 10, After getting the file, run this command:
+By visiting the EveBox official website [EveBox](https://evebox.org/), Then going to `Download`, There are several ways to install EveBox, I will use `.deb` file as it is easy to install in Debian 10, After getting the file, run this command:
 
 	$ sudo dpkg -i (.deb file path)
 
@@ -99,5 +99,5 @@ It is the same for all other result attributes.
 **Note** EveBox now has a single IP Address report feature, by clicking into any event, there is a small arrow beside the ip address, by clicking that arrow you can find a single IP report of that single IP address. 
 
 
-For more information about EveBox, you can visit there [GitHub page](https://github.com/jasonish/evebox).
+For more information about EveBox, you can visit this [GitHub page](https://github.com/jasonish/evebox).
 
