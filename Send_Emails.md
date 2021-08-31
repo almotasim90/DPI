@@ -1,6 +1,6 @@
 ---
 Title:  Send Suricata alerts through SMTP
-Description: sending Suricata alert as attachments from Debian to SURF mails.
+Description: sending Suricata alerts as attachments from Debian to SURF mails.
 Category: DPI 
 ---
 
@@ -27,14 +27,14 @@ Then, you can easily install MSMTP with this command:
 
 	$ sudo apt-get -y install msmtp
 
-You need to have a file that contains Certificate Authority (CA) certificates so that we can connect using SSL / TLS to the email server. You can check whether your server already has a ca-certificates package installed or not using command below: 
+You need to have a file that contains Certificate Authority (CA) certificates so that we can connect using SSL / TLS to the email server. You can check whether your server already has a ca-certificates package installed or not using the command below: 
 
 	$ dpkg -l | grep ca-certificates
 
 If a ca-certificates package is already installed, you will get output similar to the following output:
 `ii ca-certificates 20141019ubuntu0.14.04.1 all Common CA certificates` 
 
-**NOTE** If you get blank output, it means that ca-certificates package is not installed, and you need to install it. You can install this package by running this command:
+**NOTE** If you get blank output, it means that the ca-certificates package is not installed, and you need to install it. You can install this package by running this command:
 
 	$ sudo apt-get -y install ca-certificates
 
@@ -71,19 +71,19 @@ Create an MSMTP configuration on `/etc/msmtprc` with the content below. You will
 	# Set a default account
 	account default : surf
 
-**NOTE** if your account supports two-factory authentication, then you need extra steps:
-	Create a custom app in you Gmail security settings.
-		1. Log-in into Gmail with your account
+**NOTE** If your account supports two-factor authentication, then you need extra steps:
+	Create a custom app in your Gmail security settings.
+		1. Log in into Gmail with your account
 		2. Navigate to https://security.google.com/settings/security/apppasswords
 		3. In 'select app' choose 'custom', give it an arbitrary name and press generate
 		4. It will give you 16 chars token.
-	Use the token as password in combination with your full Gmail account and two factor authentication will not be required. For other account providers you can set authentication off. 
+	Use the token as a password in combination with your full Gmail account and two-factor authentication will not be required. For other account providers, you can set authentication off. 
 
 ### Sending email using MSMTP 
 
 You can use the following command to send a simple email using MSMPT:
 
-		$ echo "Hello this is sending email using msmtp" | msmtp <receiver email>
+		$ echo "Hello this is sending an email using msmtp" | msmtp <receiver email>
 
 However, If you want to send an email with attachments, then install Mutt. 
 
@@ -108,7 +108,7 @@ Now you can send an email with attachments using this command:
 
 		$ echo "Message Body Here" | mutt -s "Subject Here" <receiver email> -a ~/test.txt
 
-**NOTE** You can send email to multiple receivers, by providing a comma between the emails. for example:
+**NOTE** You can send an email to multiple receivers, by providing a comma between the emails. for example:
 		
 		$ echo "Message Body Here" | mutt -s "Subject Here" email@gmail.com, another_email@gmail.com -a ~/test.txt
 

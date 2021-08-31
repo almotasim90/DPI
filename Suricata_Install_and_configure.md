@@ -18,11 +18,11 @@ This page is for setting up and configure Suricata network threat detection (ver
 
 ## Suricata Installation On Debian 10
 
-Suricata is a free to use and open source network threat detection engine. In this documentation there are two ways of installing Suricata, From source or from binary package. For people familiar with compiling their own software, the Source method is recommended.
+Suricata is a free-to-use and open-source network threat detection engine. In this documentation, there are two ways of installing Suricata, From source or the binary package. For people familiar with compiling their own software, the Source method is recommended.
 
 ### Install Suricata from Binary package 
 
-With a simple install command you can install Suricata from binary package in Debian 10:
+With a simple install command you can install Suricata from the binary package in Debian 10:
 
 	$ sudo apt-get install suricata
 
@@ -48,13 +48,13 @@ More information about installing Suricata in other distributions and various co
 
 ### Install Suricata from source
 
-Before installing Suricata from source, lets begin with updating the system and upgrading all packages,then reboot:
+Before installing Suricata from the source, let's begin with updating the system and upgrading all packages, then reboot:
 
 	$ sudo apt update
 	$ sudo apt upgrade -y
 	$ reboot 
 
-We’ll install Suricata on Debian 10 from the source distribution files, it gives more control on Suricata installation, Before installing Suricata, a number of dependency packages and pre-requisite files needed to be installed, they can be installed using the following commands:
+We’ll install Suricata on Debian 10 from the source distribution files, which gives more control on Suricata installation, Before installing Suricata, several dependency packages and pre-requisite files needed to be installed, they can be installed using the following commands:
 
 	$ apt-get install make autoconf automake libtool
 
@@ -145,7 +145,7 @@ a simple configuration for Suricata is to specify the network interface in `/etc
 	af-packet:
     interface: enp1s0
 
-it depends on what is your network interface that you want Suricata to monitor, it could be  `eth0`, you could check what network platform the device have using  ` ifconfig `.
+it depends on what is your network interface that you want Suricata to monitor, it could be  `eth0`, you could check what network platform the device has using  ` ifconfig `.
 
 Also, specify the network range you want to monitor in `/etc/suricata/suricata.yaml` in `address-groups`:	
 
@@ -165,7 +165,7 @@ Suricata rules can be found in  `/var/lib/suricata/rules/suricata.rules`, by def
 
 It is recommended to update your rules frequently.
 
-You could use see other rule-sets available: by fetching the master index from the OISF hosts,then list avaliable rulesets:
+You could use see other rule-sets available: by fetching the master index from the OISF hosts, then list available rule-sets:
 
 	$ sudo suricata-update update-sources
 	$ sudo suricata-update list-sources
@@ -175,7 +175,7 @@ It will give a list of rule-sets as a result. Each of the rule-sets has a name t
 	$ sudo suricata-update enable-source scwx/malware
 	$ sudo suricata-update
 
-Then restart Suricata service and the rule-set is loaded. 
+Then restart the Suricata service and the rule-set is loaded. 
 
 You also can run testing with:
 	
@@ -197,7 +197,7 @@ It is similar to disable any rule, use  `/etc/suricata/disable.conf` :
 		group:emerging-info.rules # disable this rulefile
 		re:heartbleed             # disable all rules with this string
 
-Also, the same for `drop.conf` and `modify.conf` files. after configuring or modifying the rules, update with command:
+Also, the same for `drop.conf` and `modify.conf` files. after configuring or modifying the rules, update with the command:
 
 	$ sudo suricata-update
 
